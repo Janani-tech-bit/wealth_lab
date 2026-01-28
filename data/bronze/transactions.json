@@ -1,0 +1,29 @@
+[
+  {
+    "transaction_id": "T1",
+    "account_id": "A100",
+    "instrument": "AAPL",
+    "side": "BUY",
+    "quantity": 10,
+    "price": 180,
+    "trade_time": "2024-01-01T10:00:00"
+  },
+  {
+    "transaction_id": "T2",
+    "account_id": "A100",
+    "instrument": "AAPL",
+    "side": "SELL",
+    "quantity": 3,
+    "price": 185,
+    "trade_time": "2024-01-02T11:00:00"
+  },
+  {
+    "transaction_id": "T3",
+    "account_id": "A100",
+    "instrument": "GOOG",
+    "side": "BUY",
+    "quantity": 5,
+    "price": 140,
+    "trade_time": "2024-01-02T12:00:00"
+  }
+]
