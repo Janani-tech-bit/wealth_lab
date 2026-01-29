@@ -22,8 +22,8 @@ on:
 
 jobs:
   replay:
-    name: Replay events (GATED)
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
 
     steps:
       - name: Checkout code
