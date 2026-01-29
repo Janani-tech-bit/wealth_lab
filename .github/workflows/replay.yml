@@ -47,7 +47,11 @@ jobs:
           echo "List everything:"
           ls -R
 
-      - name: Try running replay script
+      - name: Run replay job
+        working-directory: ${{ github.workspace }}
         run: |
-          python ./pipeline/replay_events.py
+         echo "Workspace:"
+          pwd
+           ls
+           python pipeline/replay_events.py
     
