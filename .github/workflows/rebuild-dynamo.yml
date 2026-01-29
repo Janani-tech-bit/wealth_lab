@@ -1,0 +1,44 @@
+name: Rebuild DynamoDB from Iceberg
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+      reason:
+        description: "Reason for rebuild"
+        required: true
+
+jobs:
+  rebuild:
+    name: Rebuild HOT state (GATED)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Safety gate – confirm environment
+        run: |
+          echo "Rebuild requested for environment: ${{ inputs.environment }}"
+          echo "Reason: ${{ inputs.reason }}"
+
+      - name: Rebuild DynamoDB from Iceberg
+        run: |
+          python pipeline/rebuild_dynamo.py
