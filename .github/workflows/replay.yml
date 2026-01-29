@@ -1,4 +1,4 @@
-name: Event Replay / Backfill
+name: Event Replay Debug (Clean)
 
 on:
   workflow_dispatch:
@@ -7,18 +7,8 @@ on:
         description: "Target environment"
         required: true
         type: choice
-        options:
-          - dev
-          - qa
-          - prod
+        options: [dev, qa, prod]
 
-      account_id:
-        description: "Account ID to replay"
-        required: true
-
-      reason:
-        description: "Reason for replay"
-        required: true
 jobs:
   replay:
     runs-on: ubuntu-latest
@@ -28,18 +18,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Debug workspace
+      - name: Show workspace info
         run: |
-          echo "PWD:"
+          echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
           pwd
-          echo "Files:"
-          ls -R
+          ls -la
+          echo "---- pipeline ----"
+          ls -la pipeline || echo "pipeline folder missing"
 
-      - name: Run replay job
+      - name: Run replay script
         run: |
           python pipeline/replay_events.py
