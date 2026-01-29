@@ -1,0 +1,45 @@
+name: Event Replay / Backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+
+      account_id:
+        description: "Account ID to replay"
+        required: true
+
+      reason:
+        description: "Reason for replay"
+        required: true
+
+jobs:
+  replay:
+    name: Replay events (GATED)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Safety check (log intent)
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Account ID: ${{ inputs.account_id }}"
+          echo "Reason: ${{ inputs.reason }}"
+
+      - name: Run replay job
+        run: |
+          python pipeline/replay_events.py
