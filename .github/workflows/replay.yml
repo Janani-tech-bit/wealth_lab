@@ -19,14 +19,13 @@ on:
       reason:
         description: "Reason for replay"
         required: true
-
 jobs:
   replay:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -34,24 +33,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Safety check (log intent)
+      - name: Debug workspace
         run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Account ID: ${{ inputs.account_id }}"
-          echo "Reason: ${{ inputs.reason }}"
-
-      - name: Debug working directory
-        run: |
-          echo "Current directory:"
+          echo "PWD:"
           pwd
-          echo "List everything:"
+          echo "Files:"
           ls -R
 
       - name: Run replay job
-        working-directory: ${{ github.workspace }}
         run: |
-         echo "Workspace:"
-          pwd
-           ls
-           python pipeline/replay_events.py
-    
+          python pipeline/replay_events.py
