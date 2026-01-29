@@ -40,9 +40,14 @@ jobs:
           echo "Account ID: ${{ inputs.account_id }}"
           echo "Reason: ${{ inputs.reason }}"
 
-
-      - name: Run replay job
-        working-directory: .
+      - name: Debug working directory
         run: |
-         ls -R
-         python pipeline/replay_events.py
+          echo "Current directory:"
+          pwd
+          echo "List everything:"
+          ls -R
+
+      - name: Try running replay script
+        run: |
+        python ./pipeline/replay_events.py
+    
