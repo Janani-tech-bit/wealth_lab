@@ -49,5 +49,5 @@ jobs:
 
       - name: Try running replay script
         run: |
-        python ./pipeline/replay_events.py
+          python ./pipeline/replay_events.py
     
